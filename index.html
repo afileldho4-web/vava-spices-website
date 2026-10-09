@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vava Spices | The Essence of Purity Since 1976</title>
+    <!-- Royal Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700;800&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a4a2a; 
+            --accent: #d4af37;
+            --text-dark: #111;
+            --text-light: #555;
+            --bg-offwhite: #fcfcfc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Jost', sans-serif; 
+            color: var(--text-dark); 
+            background-color: white; 
+            line-height: 1.6; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+
+        /* --- NAVBAR --- */
+        header { 
+            position: absolute; 
+            top: 0; left: 0; width: 100%; 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1.2rem 5%; 
+            z-index: 10;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+        }
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .logo-container img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: white; }
+        .logo-container span { 
+            font-size: 1.5rem; 
+            color: white; 
+            font-family: 'Cormorant Garamond', serif; 
+            font-weight: 700; 
+            letter-spacing: 1px;
+        }
+        
+        nav ul { list-style: none; display: flex; gap: 1.5rem; }
+        nav a { text-decoration: none; color: white; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; font-weight: 500; }
+        nav a:hover { color: var(--accent); }
+
+        /* --- FULL SCREEN HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden;
+            background-color: #111;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.45); 
+            z-index: 2;
+        }
+        
+        .hero-text {
+            position: relative;
+            z-index: 3;
+            padding: 0 5%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .hero-text .subtitle {
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .hero-text h1 { 
+            font-size: 5.5rem; 
+            margin-bottom: 1.2rem; 
+            line-height: 1.1;
+            letter-spacing: 1px; 
+            color: white; 
+            font-weight: 700; 
+        }
+        
+        .hero-text p { 
+            font-size: 1.1rem; 
+            max-width: 600px; 
+            margin-bottom: 2rem; 
+            font-weight: 400; 
+            color: #eeeeee; 
+            line-height: 1.7;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--primary);
+        }
+        .btn:hover { background-color: transparent; border-color: white; color: white; }
+
+        /* --- LOCAL DRONE BACKGROUND IMAGE --- */
+        .hero-animated-bg {
+            position: absolute;
+            top: -2%; left: -2%; right: -2%; bottom: -2%;
+            background-image: url('drone.png'); /* Points directly to your local file */
+            background-size: cover;
+            background-position: center;
+            animation: slowPanZoom 20s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes slowPanZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        /* --- PRODUCTS GALLERY --- */
+        .products-section { padding: 5rem 5%; background-color: white; text-align: center; }
+        .products-section h2 { font-size: 2.8rem; margin-bottom: 3rem; color: var(--primary); font-weight: 700; }
+        
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .product-card { text-align: left; cursor: pointer; }
+        .img-wrapper { overflow: hidden; border-radius: 8px; background: var(--bg-offwhite); padding: 2rem; margin-bottom: 1.2rem; transition: 0.4s ease; text-align: center; }
+        .img-wrapper:hover { background: #f0f5f0; }
+        .product-image { width: 100%; height: auto; max-width: 200px; max-height: 200px; object-fit: contain; margin: 0 auto; display: block; transition: transform 0.5s ease; }
+        .product-card:hover .product-image { transform: scale(1.05); }
+        
+        .product-card h3 { font-size: 1.6rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--primary); }
+        .product-card p { color: var(--text-light); margin-bottom: 1rem; font-size: 0.9rem; }
+        .buy-now { color: var(--primary); font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
+        .buy-now:hover { color: var(--accent); }
+
+        /* --- ABOUT VAVA SPICES --- */
+        .intro-section { padding: 5rem 5%; background-color: var(--bg-offwhite); text-align: center; }
+        .intro-section h2 { font-size: 2.8rem; margin-bottom: 1.2rem; color: var(--primary); font-weight: 700; }
+        .intro-section p { font-size: 1.05rem; color: var(--text-light); max-width: 750px; margin: 0 auto; }
+
+        /* --- HERITAGE TIMELINE --- */
+        .services-section { padding: 5rem 5%; background-color: white; text-align: center; }
+        .services-section h2 { font-size: 2.8rem; margin-bottom: 3rem; font-weight: 700; color: var(--primary); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 0 auto; }
+        .service-card { padding: 2.2rem 1.8rem; border-top: 3px solid var(--primary); background: var(--bg-offwhite); box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .service-card h3 { font-size: 1.6rem; margin-bottom: 0.8rem; color: var(--primary); font-weight: 700; }
+        .service-card p { color: var(--text-light); font-weight: 400; font-size: 0.95rem; }
+
+        /* --- CONTACT SECTION --- */
+        .contact-section { padding: 5rem 5%; background-color: var(--bg-offwhite); text-align: center; border-top: 1px solid #eaeaea; }
+        .contact-section h2 { font-size: 2.8rem; margin-bottom: 1rem; color: var(--primary); font-weight: 700; }
+        .contact-grid { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; max-width: 900px; margin: 2.5rem auto 0; }
+        
+        .contact-item { display: flex; flex-direction: column; align-items: center; }
+        .contact-icon { font-size: 1.8rem; color: var(--accent); margin-bottom: 0.8rem; }
+        .contact-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 1px; font-family: 'Jost', sans-serif;}
+        .contact-detail { color: var(--text-light); font-size: 1rem; margin-bottom: 0.2rem; }
+        .contact-link { color: var(--primary); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .contact-link:hover { color: var(--accent); }
+        
+        .social-links { margin-top: 2.5rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .social-btn { display: flex; align-items: center; gap: 8px; padding: 0.7rem 1.4rem; background: white; border: 1px solid #ddd; border-radius: 30px; text-decoration: none; color: var(--text-dark); font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
+        .social-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .social-btn i { font-size: 1.1rem; }
+
+        /* --- FOOTER --- */
+        <footer>
+            <img src="38005.png" alt="Logo" class="footer-logo" onerror="this.src='38005.png.jpeg'">
+            <p>&copy; 2026 Vava Spices. Pure Spices | Better Living.</p>
+        </footer>
+
+        @media (max-width: 768px) {
+            header { padding: 0.8rem 3%; flex-direction: column; gap: 6px; background: rgba(0,0,0,0.85); }
+            .logo-container span { font-size: 1.2rem; }
+            nav ul { gap: 1rem; }
+            nav a { font-size: 0.7rem; }
+            .hero-text h1 { font-size: 2.8rem; margin-bottom: 0.8rem; }
+            .hero-text p { font-size: 0.9rem; padding: 0 10px; margin-bottom: 1.5rem; }
+            .contact-grid { gap: 2rem; flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="38005.png" alt="Vava Spices Logo" onerror="this.src='38005.png.jpeg'">
+            <span>Vava Spices</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">Heritage</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-animated-bg"></div>
+        <div class="hero-text">
+            <span class="subtitle">The essence of purity since 1976</span>
+            <h1>Vava Spices</h1>
+            <p>Sourced directly from the lush hills of Rajakumari, we bring you the finest, hand-selected cardamom, black pepper, and cloves. Experience the royal flavors of Kerala in every pinch.</p>
+            <a href="#products" class="btn">Shop The Collection</a>
+        </div>
+    </section>
+
+    <!-- Products Gallery -->
+    <section class="products-section" id="products">
+        <h2>Our Premium Collection</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="img-wrapper">
+                    <img src="38795.jpg" alt="Premium Green Cardamom" class="product-image" onerror="this.src='38795.jpg.jpeg'">
+                </div>
+                <h3>Premium Green Cardamom</h3>
+                <p>Highly aromatic, whole green pods handpicked for unparalleled flavor.</p>
+                <a href="#contact" class="buy-now">Shop Now →</a>
+            </div>
+
+            <div class="product-card">
+                <div class="img-wrapper">
+                    <img src="38798.jpg" alt="Black Pepper" class="product-image" onerror="this.src='38798.jpg.jpeg'">
+                </div>
+                <h3>Rajakumari Black Pepper</h3>
+                <p>Bold, robust, and full-bodied whole peppercorns from the hills of Kerala.</p>
+                <a href="#contact" class="buy-now">Shop Now →</a>
+            </div>
+
+            <div class="product-card">
+                <div class="img-wrapper">
+                    <img src="38802.jpg" alt="Whole Cloves" class="product-image" onerror="this.src='38802.jpg.jpeg'">
+                </div>
+                <h3>Rajakumari Whole Cloves</h3>
+                <p>Rich, warm, and intensely aromatic whole cloves that bring an elegant depth.</p>
+                <a href="#contact" class="buy-now">Shop Now →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="intro-section" id="about">
+        <h2>Rooted in Kerala's Spice Hills</h2>
+        <p>Founded in 1976 by K.P. Mathai & Sons under the name K P Mathai hill produces dealer, our family has spent generations trading the finest produce of the Western Ghats.</p>
+    </section>
+
+    <!-- Heritage Journey Grid -->
+    <section class="services-section">
+        <h2>Our Journey</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>1976: The Beginning</h3>
+                <p>K.P. Mathai & Sons begin trading out of the Kerala hills, building deep relationships with estate families that still supply us today.</p>
+            </div>
+            <div class="service-card">
+                <h3>2015: Vava Spices (P) Ltd</h3>
+                <p>The legacy is rebuilt as a private limited company. We maintain our original sourcing, with new grading halls and lab checks.</p>
+            </div>
+            <div class="service-card">
+                <h3>Today: Hills to Kitchens</h3>
+                <p>From household packs to bulk contracts across India, we ensure every lot of spices is fully traceable back to the estate.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <h2>Get in Touch</h2>
+        <p style="color: var(--text-light); max-width: 600px; margin: 0 auto;">Whether you are looking for household spices or wholesale contracts, our team in Rajakumari is ready to assist you.</p>
+        
+        <div class="contact-grid">
+            <div class="contact-item">
+                <i class="fas fa-phone contact-icon"></i>
+                <div class="contact-title">Call Us</div>
+                <div class="contact-detail">+91 94002 25652</div>
+                <div class="contact-detail">+91 90747 59800</div>
+                <div class="contact-detail">+91 94954 47030</div>
+            </div>
+            
+            <div class="contact-item">
+                <i class="fas fa-envelope contact-icon"></i>
+                <div class="contact-title">Email Us</div>
+                <a href="mailto:info.vavaspices@gmail.com" class="contact-link">info.vavaspices@gmail.com</a>
+            </div>
+
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt contact-icon"></i>
+                <div class="contact-title">Visit Us</div>
+                <div class="contact-detail">Vava Spices (P) Ltd.</div>
+                <div class="contact-detail">Rajakumari, Idukki</div>
+                <div class="contact-detail">Kerala, India</div>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="https://www.instagram.com/vava_spices" target="_blank" class="social-btn">
+                <i class="fab fa-instagram"></i> vava_spices
+            </a>
+            <a href="https://www.facebook.com/vavaspices" target="_blank" class="social-btn">
+                <i class="fab fa-facebook-f"></i> Vava Spices
+            </a>
+        </div>
+    </section>
+
+   <!-- Footer -->
+    <footer>
+        <img src="38005.png" alt="Logo" class="footer-logo" onerror="this.src='38005.png.jpeg'">
+        <p>&copy; 2026 Vava Spices. Pure Spices | Better Living.</p>
+    </footer>
+
+<style>
+    footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;   /* Centers items horizontally */
+        justify-content: center; /* Centers items vertically if needed */
+        text-align: center;    /* Centers the text */
+        gap: 10px;             /* Adds space between the logo and text */
+    }
+
+    .footer-logo {
+        /* Optional: Set a max-width or width if the image is too large */
+        max-width: 150px; 
+    }
+</style>
+
+</body>
+</html>
