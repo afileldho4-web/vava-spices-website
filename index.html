@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vava Spices | The Essence of Purity Since 1976</title>
     <!-- Royal Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700;800&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -24,6 +24,7 @@
             background-color: white; 
             line-height: 1.6; 
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden; /* Prevents side-to-side scrolling on mobile */
         }
 
         h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
@@ -35,7 +36,7 @@
             display: flex; justify-content: space-between; align-items: center; 
             padding: 1.2rem 5%; 
             z-index: 10;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
         }
         .logo-container { display: flex; align-items: center; gap: 10px; }
         .logo-container img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: white; }
@@ -55,7 +56,7 @@
         .hero {
             position: relative;
             height: 100vh;
-            min-height: 600px;
+            min-height: 650px;
             display: flex;
             align-items: center; 
             justify-content: center;
@@ -67,7 +68,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.45); 
+            background: rgba(0, 0, 0, 0.5); 
             z-index: 2;
         }
         
@@ -79,6 +80,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
         
         .hero-text .subtitle {
@@ -102,11 +104,24 @@
         
         .hero-text p { 
             font-size: 1.1rem; 
-            max-width: 600px; 
+            max-width: 650px; 
             margin-bottom: 2rem; 
             font-weight: 400; 
             color: #eeeeee; 
             line-height: 1.7;
+        }
+
+        .global-badge {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            font-weight: 600;
         }
         
         .btn {
@@ -124,11 +139,11 @@
         }
         .btn:hover { background-color: transparent; border-color: white; color: white; }
 
-        /* --- LOCAL DRONE BACKGROUND IMAGE --- */
+        /* --- BACKGROUND IMAGE --- */
         .hero-animated-bg {
             position: absolute;
             top: -2%; left: -2%; right: -2%; bottom: -2%;
-            background-image: url('drone.png'); /* Points directly to your local file */
+            background-image: url('drone.png'); 
             background-size: cover;
             background-position: center;
             animation: slowPanZoom 20s infinite alternate ease-in-out;
@@ -156,50 +171,71 @@
         .buy-now { color: var(--primary); font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
         .buy-now:hover { color: var(--accent); }
 
+        /* --- LEADERSHIP SECTION --- */
+        .leadership-section { padding: 5rem 5%; background-color: var(--bg-offwhite); text-align: center; }
+        .leadership-section h2 { font-size: 2.8rem; margin-bottom: 3rem; color: var(--primary); font-weight: 700; }
+        
+        .leader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem; max-width: 900px; margin: 0 auto; }
+        .leader-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.05); text-align: left; border: 1px solid #eaeaea; }
+        .leader-img { width: 100%; height: 350px; object-fit: cover; object-position: center top; }
+        .leader-info { padding: 2rem; }
+        .leader-role { font-size: 0.85rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 0.4rem; }
+        .leader-name { font-size: 1.8rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem; font-family: 'Cormorant Garamond', serif; }
+        .leader-exp { color: var(--text-light); font-size: 0.95rem; font-weight: 500; }
+
         /* --- ABOUT VAVA SPICES --- */
-        .intro-section { padding: 5rem 5%; background-color: var(--bg-offwhite); text-align: center; }
+        .intro-section { padding: 5rem 5%; background-color: white; text-align: center; border-top: 1px solid #eaeaea;}
         .intro-section h2 { font-size: 2.8rem; margin-bottom: 1.2rem; color: var(--primary); font-weight: 700; }
         .intro-section p { font-size: 1.05rem; color: var(--text-light); max-width: 750px; margin: 0 auto; }
 
         /* --- HERITAGE TIMELINE --- */
-        .services-section { padding: 5rem 5%; background-color: white; text-align: center; }
+        .services-section { padding: 5rem 5%; background-color: var(--bg-offwhite); text-align: center; border-top: 1px solid #eaeaea; }
         .services-section h2 { font-size: 2.8rem; margin-bottom: 3rem; font-weight: 700; color: var(--primary); }
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 0 auto; }
-        .service-card { padding: 2.2rem 1.8rem; border-top: 3px solid var(--primary); background: var(--bg-offwhite); box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .service-card { padding: 2.2rem 1.8rem; border-top: 3px solid var(--primary); background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
         .service-card h3 { font-size: 1.6rem; margin-bottom: 0.8rem; color: var(--primary); font-weight: 700; }
         .service-card p { color: var(--text-light); font-weight: 400; font-size: 0.95rem; }
 
         /* --- CONTACT SECTION --- */
-        .contact-section { padding: 5rem 5%; background-color: var(--bg-offwhite); text-align: center; border-top: 1px solid #eaeaea; }
+        .contact-section { padding: 5rem 5%; background-color: white; text-align: center; border-top: 1px solid #eaeaea; }
         .contact-section h2 { font-size: 2.8rem; margin-bottom: 1rem; color: var(--primary); font-weight: 700; }
         .contact-grid { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; max-width: 900px; margin: 2.5rem auto 0; }
         
-        .contact-item { display: flex; flex-direction: column; align-items: center; }
+        .contact-item { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 250px; }
         .contact-icon { font-size: 1.8rem; color: var(--accent); margin-bottom: 0.8rem; }
         .contact-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 1px; font-family: 'Jost', sans-serif;}
-        .contact-detail { color: var(--text-light); font-size: 1rem; margin-bottom: 0.2rem; }
-        .contact-link { color: var(--primary); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .contact-detail { color: var(--text-light); font-size: 1rem; margin-bottom: 0.2rem; text-align: center; }
+        .contact-link { color: var(--primary); text-decoration: none; font-weight: 500; transition: color 0.3s; text-align: center; }
         .contact-link:hover { color: var(--accent); }
         
-        .social-links { margin-top: 2.5rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-        .social-btn { display: flex; align-items: center; gap: 8px; padding: 0.7rem 1.4rem; background: white; border: 1px solid #ddd; border-radius: 30px; text-decoration: none; color: var(--text-dark); font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
+        .social-links { margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .social-btn { display: flex; align-items: center; gap: 8px; padding: 0.7rem 1.4rem; background: var(--bg-offwhite); border: 1px solid #ddd; border-radius: 30px; text-decoration: none; color: var(--text-dark); font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
         .social-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
         .social-btn i { font-size: 1.1rem; }
 
         /* --- FOOTER --- */
-        <footer>
-            <img src="38005.png" alt="Logo" class="footer-logo" onerror="this.src='38005.png.jpeg'">
-            <p>&copy; 2026 Vava Spices. Pure Spices | Better Living.</p>
-        </footer>
-
+        footer { background-color: #111; color: white; padding: 3rem 5% 1.5rem; text-align: center; }
+        .footer-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 0.8rem; background: white; }
+        footer p { color: #888; font-size: 0.85rem; margin-top: 1.5rem; }
+        
+        /* --- BULLETPROOF MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
-            header { padding: 0.8rem 3%; flex-direction: column; gap: 6px; background: rgba(0,0,0,0.85); }
-            .logo-container span { font-size: 1.2rem; }
-            nav ul { gap: 1rem; }
-            nav a { font-size: 0.7rem; }
-            .hero-text h1 { font-size: 2.8rem; margin-bottom: 0.8rem; }
-            .hero-text p { font-size: 0.9rem; padding: 0 10px; margin-bottom: 1.5rem; }
-            .contact-grid { gap: 2rem; flex-direction: column; }
+            header { padding: 1rem 5%; flex-direction: column; gap: 12px; background: rgba(0,0,0,0.9); }
+            .logo-container span { font-size: 1.3rem; }
+            
+            /* Allows nav links to wrap onto a second line if the phone is very narrow */
+            nav ul { gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
+            nav a { font-size: 0.75rem; letter-spacing: 0.5px; }
+            
+            .hero-text h1 { font-size: 3rem; margin-bottom: 1rem; }
+            .global-badge { font-size: 0.7rem; padding: 0.4rem 1rem; line-height: 1.4; text-align: center; }
+            .hero-text p { font-size: 0.95rem; padding: 0; margin-bottom: 1.5rem; }
+            
+            /* Forces grids to a single column so they never scroll horizontally on mobile */
+            .product-grid, .leader-grid, .services-grid { grid-template-columns: 1fr; gap: 2rem;}
+            .leader-img { height: 300px; }
+            
+            .contact-grid { gap: 2.5rem; flex-direction: column; align-items: center; }
         }
     </style>
 </head>
@@ -214,6 +250,7 @@
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#products">Products</a></li>
+                <li><a href="#leadership">Leadership</a></li>
                 <li><a href="#about">Heritage</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -225,6 +262,7 @@
         <div class="hero-text">
             <span class="subtitle">The essence of purity since 1976</span>
             <h1>Vava Spices</h1>
+            <div class="global-badge">Exporters & Importers of All Kinds of Spices to Any Country</div>
             <p>Sourced directly from the lush hills of Rajakumari, we bring you the finest, hand-selected cardamom, black pepper, and cloves. Experience the royal flavors of Kerala in every pinch.</p>
             <a href="#products" class="btn">Shop The Collection</a>
         </div>
@@ -263,6 +301,30 @@
         </div>
     </section>
 
+    <!-- Leadership Section -->
+    <section class="leadership-section" id="leadership">
+        <h2>Our Leadership</h2>
+        <div class="leader-grid">
+            <div class="leader-card">
+                <img src="eldho.jpeg" alt="Eldho Mathew" class="leader-img" onerror="this.src='1791526204358.jpeg'">
+                <div class="leader-info">
+                    <div class="leader-role">Managing Director</div>
+                    <div class="leader-name">Eldho Mathew</div>
+                    <div class="leader-exp">30 Years of Trading Experience</div>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <img src="smitha.jpeg" alt="Smitha Abraham" class="leader-img" onerror="this.src='1791526290290.jpeg'">
+                <div class="leader-info">
+                    <div class="leader-role">Financial Manager & General Secretary</div>
+                    <div class="leader-name">Smitha Abraham</div>
+                    <div class="leader-exp">5 Years of Trading Experience</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Intro Section -->
     <section class="intro-section" id="about">
         <h2>Rooted in Kerala's Spice Hills</h2>
@@ -282,8 +344,8 @@
                 <p>The legacy is rebuilt as a private limited company. We maintain our original sourcing, with new grading halls and lab checks.</p>
             </div>
             <div class="service-card">
-                <h3>Today: Hills to Kitchens</h3>
-                <p>From household packs to bulk contracts across India, we ensure every lot of spices is fully traceable back to the estate.</p>
+                <h3>Today: Global Exporters</h3>
+                <p>From household packs to bulk international contracts, we ensure every lot of spices is fully traceable and exported worldwide.</p>
             </div>
         </div>
     </section>
@@ -291,7 +353,7 @@
     <!-- Contact Section -->
     <section class="contact-section" id="contact">
         <h2>Get in Touch</h2>
-        <p style="color: var(--text-light); max-width: 600px; margin: 0 auto;">Whether you are looking for household spices or wholesale contracts, our team in Rajakumari is ready to assist you.</p>
+        <p style="color: var(--text-light); max-width: 600px; margin: 0 auto;">Whether you are looking for household spices or global export contracts, our team in Rajakumari is ready to assist you.</p>
         
         <div class="contact-grid">
             <div class="contact-item">
@@ -327,27 +389,11 @@
         </div>
     </section>
 
-   <!-- Footer -->
+    <!-- Footer -->
     <footer>
         <img src="38005.png" alt="Logo" class="footer-logo" onerror="this.src='38005.png.jpeg'">
         <p>&copy; 2026 Vava Spices. Pure Spices | Better Living.</p>
     </footer>
-
-<style>
-    footer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;   /* Centers items horizontally */
-        justify-content: center; /* Centers items vertically if needed */
-        text-align: center;    /* Centers the text */
-        gap: 10px;             /* Adds space between the logo and text */
-    }
-
-    .footer-logo {
-        /* Optional: Set a max-width or width if the image is too large */
-        max-width: 150px; 
-    }
-</style>
 
 </body>
 </html>
