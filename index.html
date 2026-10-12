@@ -12,19 +12,24 @@
             --primary: #1a4a2a; 
             --accent: #d4af37;
             --text-dark: #111;
-            --text-light: #555;
-            --bg-offwhite: #fcfcfc;
+            --text-light: #4a4a4a;
+            
+            /* --- YOUR CUSTOM EARTHY THEME --- */
+            --bg-ivory: #bdc2ba; 
+            --bg-ivory-dark: #dce3cc; 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
+        html { scroll-behavior: smooth; }
+
         body { 
             font-family: 'Jost', sans-serif; 
             color: var(--text-dark); 
-            background-color: white; 
+            background-color: var(--bg-ivory); 
             line-height: 1.6; 
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden; /* Prevents side-to-side scrolling on mobile */
+            overflow-x: hidden;
         }
 
         h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
@@ -35,11 +40,11 @@
             top: 0; left: 0; width: 100%; 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 1.2rem 5%; 
-            z-index: 10;
+            z-index: 50;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
         }
-        .logo-container { display: flex; align-items: center; gap: 10px; }
-        .logo-container img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: white; }
+        .logo-container { display: flex; align-items: center; gap: 10px; z-index: 51; }
+        .logo-container img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: var(--bg-ivory); }
         .logo-container span { 
             font-size: 1.5rem; 
             color: white; 
@@ -48,18 +53,20 @@
             letter-spacing: 1px;
         }
         
-        nav ul { list-style: none; display: flex; gap: 1.5rem; }
-        nav a { text-decoration: none; color: white; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; font-weight: 500; }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav a { text-decoration: none; color: white; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; font-weight: 500; }
         nav a:hover { color: var(--accent); }
+        
+        .menu-toggle { display: none; color: white; font-size: 1.8rem; cursor: pointer; z-index: 51; }
 
-        /* --- FULL SCREEN HERO SECTION --- */
+        /* --- HERO SECTION --- */
         .hero {
             position: relative;
             height: 100vh;
             min-height: 650px;
             display: flex;
             align-items: center; 
-            justify-content: center;
+            justify-content: flex-start;
             overflow: hidden;
             background-color: #111;
         }
@@ -75,11 +82,11 @@
         .hero-text {
             position: relative;
             z-index: 3;
-            padding: 0 5%;
-            text-align: center;
+            padding: 0 8%;
+            text-align: left;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             width: 100%;
         }
         
@@ -101,23 +108,15 @@
             color: white; 
             font-weight: 700; 
         }
-        
-        .hero-text p { 
-            font-size: 1.1rem; 
-            max-width: 650px; 
-            margin-bottom: 2rem; 
-            font-weight: 400; 
-            color: #eeeeee; 
-            line-height: 1.7;
-        }
 
+        /* --- THE TRANSPARENT GOLDEN BOX --- */
         .global-badge {
             background: rgba(212, 175, 55, 0.2);
             border: 1px solid var(--accent);
             color: var(--accent);
-            padding: 0.5rem 1.2rem;
+            padding: 0.6rem 1.5rem;
             border-radius: 30px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 2rem;
@@ -139,65 +138,69 @@
         }
         .btn:hover { background-color: transparent; border-color: white; color: white; }
 
-        /* --- BACKGROUND IMAGE --- */
         .hero-animated-bg {
             position: absolute;
             top: -2%; left: -2%; right: -2%; bottom: -2%;
             background-image: url('drone.png'); 
             background-size: cover;
             background-position: center;
-            animation: slowPanZoom 20s infinite alternate ease-in-out;
             z-index: 1;
         }
 
-        @keyframes slowPanZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.15); }
-        }
-
         /* --- PRODUCTS GALLERY --- */
-        .products-section { padding: 5rem 5%; background-color: white; text-align: center; }
+        .products-section { padding: 5rem 5%; background-color: var(--bg-ivory); text-align: center; }
         .products-section h2 { font-size: 2.8rem; margin-bottom: 3rem; color: var(--primary); font-weight: 700; }
         
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        .product-card { text-align: left; cursor: pointer; }
-        .img-wrapper { overflow: hidden; border-radius: 8px; background: var(--bg-offwhite); padding: 2rem; margin-bottom: 1.2rem; transition: 0.4s ease; text-align: center; }
-        .img-wrapper:hover { background: #f0f5f0; }
-        .product-image { width: 100%; height: auto; max-width: 200px; max-height: 200px; object-fit: contain; margin: 0 auto; display: block; transition: transform 0.5s ease; }
-        .product-card:hover .product-image { transform: scale(1.05); }
+        .product-card { text-align: left; display: flex; flex-direction: column; }
+        
+        .extra-product { display: none; }
+        .extra-product.show { display: flex; }
+
+        .img-wrapper { overflow: hidden; border-radius: 8px; background: var(--bg-ivory-dark); padding: 2rem; margin-bottom: 1.2rem; text-align: center; }
+        .product-image { width: 100%; height: auto; max-width: 250px; max-height: 250px; object-fit: contain; margin: 0 auto; display: block; }
         
         .product-card h3 { font-size: 1.6rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--primary); }
-        .product-card p { color: var(--text-light); margin-bottom: 1rem; font-size: 0.9rem; }
-        .buy-now { color: var(--primary); font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; }
-        .buy-now:hover { color: var(--accent); }
-
-        /* --- LEADERSHIP SECTION --- */
-        .leadership-section { padding: 5rem 5%; background-color: var(--bg-offwhite); text-align: center; }
-        .leadership-section h2 { font-size: 2.8rem; margin-bottom: 3rem; color: var(--primary); font-weight: 700; }
+        .product-card p { color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.9rem; flex-grow: 1; }
         
+        .buy-now { color: white; background-color: #25D366; padding: 0.6rem 1.2rem; border-radius: 4px; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; align-self: flex-start; }
+        .buy-now:hover { background-color: #1ebe57; transform: translateY(-2px); }
+
+        .view-more-container { margin-top: 3rem; text-align: center; }
+        .view-more-btn { background: transparent; border: 2px solid var(--primary); color: var(--primary); padding: 0.8rem 2.5rem; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; border-radius: 30px; transition: 0.3s ease; }
+        .view-more-btn:hover { background: var(--primary); color: var(--bg-ivory); }
+
+        /* --- GLOBAL INFRASTRUCTURE --- */
+        .infrastructure-section { padding: 5rem 5%; background-color: var(--bg-ivory-dark); text-align: center; border-top: 1px solid #eaeaea; }
+        .infrastructure-section h2 { font-size: 2.8rem; margin-bottom: 1rem; color: var(--primary); font-weight: 700; }
+        .infra-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 0 auto; }
+        
+        .infra-card { text-align: left; background: var(--bg-ivory); border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border: 1px solid #eaeaea; }
+        .infra-card img { width: 100%; height: 250px; object-fit: cover; }
+        .infra-card h3 { font-size: 1.4rem; color: var(--primary); font-weight: 700; margin: 1.5rem 1.5rem 0.5rem; }
+        .infra-card p { color: var(--text-light); font-size: 0.95rem; margin: 0 1.5rem 1.5rem; line-height: 1.6; }
+
+        /* --- ABOUT US & LEADERSHIP --- */
+        .about-section { padding: 5rem 5%; background-color: var(--bg-ivory); text-align: center; border-top: 1px solid #eaeaea;}
+        .about-header h2 { font-size: 2.8rem; margin-bottom: 1.2rem; color: var(--primary); font-weight: 700; }
+        .about-header p { font-size: 1.1rem; color: var(--text-light); max-width: 850px; margin: 0 auto 4rem; line-height: 1.8; }
+        
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 0 auto 5rem; }
+        .service-card { padding: 2.5rem 2rem; border-top: 3px solid var(--primary); background: var(--bg-ivory-dark); box-shadow: 0 5px 15px rgba(0,0,0,0.03); text-align: left; }
+        .service-card h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--primary); font-weight: 700; }
+        .service-card p { color: var(--text-light); font-weight: 400; font-size: 0.95rem; line-height: 1.7; }
+
+        .leadership-title { font-size: 2.4rem; margin-bottom: 3rem; color: var(--primary); font-weight: 700; text-align: center; }
         .leader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem; max-width: 900px; margin: 0 auto; }
-        .leader-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.05); text-align: left; border: 1px solid #eaeaea; }
-        .leader-img { width: 100%; height: 350px; object-fit: cover; object-position: center top; }
+        .leader-card { background: var(--bg-ivory-dark); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.05); text-align: left; border: 1px solid #eaeaea; }
+        .leader-img { width: 100%; height: 350px; object-fit: cover; object-position: center 20%; } 
         .leader-info { padding: 2rem; }
         .leader-role { font-size: 0.85rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 0.4rem; }
         .leader-name { font-size: 1.8rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem; font-family: 'Cormorant Garamond', serif; }
         .leader-exp { color: var(--text-light); font-size: 0.95rem; font-weight: 500; }
 
-        /* --- ABOUT VAVA SPICES --- */
-        .intro-section { padding: 5rem 5%; background-color: white; text-align: center; border-top: 1px solid #eaeaea;}
-        .intro-section h2 { font-size: 2.8rem; margin-bottom: 1.2rem; color: var(--primary); font-weight: 700; }
-        .intro-section p { font-size: 1.05rem; color: var(--text-light); max-width: 750px; margin: 0 auto; }
-
-        /* --- HERITAGE TIMELINE --- */
-        .services-section { padding: 5rem 5%; background-color: var(--bg-offwhite); text-align: center; border-top: 1px solid #eaeaea; }
-        .services-section h2 { font-size: 2.8rem; margin-bottom: 3rem; font-weight: 700; color: var(--primary); }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 0 auto; }
-        .service-card { padding: 2.2rem 1.8rem; border-top: 3px solid var(--primary); background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
-        .service-card h3 { font-size: 1.6rem; margin-bottom: 0.8rem; color: var(--primary); font-weight: 700; }
-        .service-card p { color: var(--text-light); font-weight: 400; font-size: 0.95rem; }
-
-        /* --- CONTACT SECTION --- */
-        .contact-section { padding: 5rem 5%; background-color: white; text-align: center; border-top: 1px solid #eaeaea; }
+        /* --- CONTACT --- */
+        .contact-section { padding: 5rem 5%; background-color: var(--bg-ivory-dark); text-align: center; border-top: 1px solid #eaeaea; }
         .contact-section h2 { font-size: 2.8rem; margin-bottom: 1rem; color: var(--primary); font-weight: 700; }
         .contact-grid { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; max-width: 900px; margin: 2.5rem auto 0; }
         
@@ -209,33 +212,44 @@
         .contact-link:hover { color: var(--accent); }
         
         .social-links { margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-        .social-btn { display: flex; align-items: center; gap: 8px; padding: 0.7rem 1.4rem; background: var(--bg-offwhite); border: 1px solid #ddd; border-radius: 30px; text-decoration: none; color: var(--text-dark); font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
-        .social-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-        .social-btn i { font-size: 1.1rem; }
+        .social-btn { display: flex; align-items: center; gap: 8px; padding: 0.7rem 1.4rem; background: var(--bg-ivory); border: 1px solid #ddd; border-radius: 30px; text-decoration: none; color: var(--text-dark); font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
+        .social-btn:hover { background: var(--primary); color: var(--bg-ivory); border-color: var(--primary); }
+
+        /* --- TRUST STRIP --- */
+        .certifications { background-color: var(--primary); padding: 2.5rem 5%; color: var(--bg-ivory); text-align: center; }
+        .cert-container { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; }
+        .cert-item { display: flex; align-items: center; gap: 12px; font-weight: 500; letter-spacing: 1px; font-size: 0.95rem; text-transform: uppercase; }
+        .cert-item i { color: var(--accent); font-size: 1.6rem; }
 
         /* --- FOOTER --- */
-        footer { background-color: #111; color: white; padding: 3rem 5% 1.5rem; text-align: center; }
-        .footer-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 0.8rem; background: white; }
+        footer { background-color: #111; color: var(--bg-ivory); padding: 3rem 5% 1.5rem; text-align: center; }
+        .footer-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 0.8rem; background: var(--bg-ivory); }
         footer p { color: #888; font-size: 0.85rem; margin-top: 1.5rem; }
         
-        /* --- BULLETPROOF MOBILE RESPONSIVENESS --- */
+        /* --- MOBILE --- */
         @media (max-width: 768px) {
-            header { padding: 1rem 5%; flex-direction: column; gap: 12px; background: rgba(0,0,0,0.9); }
-            .logo-container span { font-size: 1.3rem; }
+            header { background: rgba(0,0,0,0.9); flex-direction: row; justify-content: space-between; }
+            .menu-toggle { display: block; }
             
-            /* Allows nav links to wrap onto a second line if the phone is very narrow */
-            nav ul { gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
-            nav a { font-size: 0.75rem; letter-spacing: 0.5px; }
+            nav ul { 
+                display: none; flex-direction: column; position: absolute; 
+                top: 100%; left: 0; width: 100%; background: rgba(0,0,0,0.95); 
+                padding: 2rem 0; text-align: center; gap: 2rem; border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            nav ul.active { display: flex; } 
             
+            .hero-text { padding: 0 6%; } 
             .hero-text h1 { font-size: 3rem; margin-bottom: 1rem; }
-            .global-badge { font-size: 0.7rem; padding: 0.4rem 1rem; line-height: 1.4; text-align: center; }
-            .hero-text p { font-size: 0.95rem; padding: 0; margin-bottom: 1.5rem; }
+            .global-badge { font-size: 0.7rem; padding: 0.4rem 1rem; line-height: 1.4; text-align: left; }
             
-            /* Forces grids to a single column so they never scroll horizontally on mobile */
-            .product-grid, .leader-grid, .services-grid { grid-template-columns: 1fr; gap: 2rem;}
-            .leader-img { height: 300px; }
+            .product-grid, .leader-grid, .services-grid, .infra-grid { grid-template-columns: 1fr; gap: 2rem;}
+            .leader-img { height: 320px; }
+            
+            .about-header h2, .infrastructure-section h2 { font-size: 2.2rem; }
+            .leadership-title { font-size: 2.2rem; }
             
             .contact-grid { gap: 2.5rem; flex-direction: column; align-items: center; }
+            .cert-container { flex-direction: column; gap: 1.5rem; align-items: center; }
         }
     </style>
 </head>
@@ -243,15 +257,18 @@
 
     <header>
         <div class="logo-container">
-            <img src="38005.png" alt="Vava Spices Logo" onerror="this.src='38005.png.jpeg'">
+            <img class="auto-fix-img" data-name="38005.png" alt="Vava Spices Logo">
             <span>Vava Spices</span>
         </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
         <nav>
-            <ul>
+            <ul id="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#products">Products</a></li>
-                <li><a href="#leadership">Leadership</a></li>
-                <li><a href="#about">Heritage</a></li>
+                <li><a href="#infrastructure">Infrastructure</a></li>
+                <li><a href="#about">About Us</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -262,51 +279,151 @@
         <div class="hero-text">
             <span class="subtitle">The essence of purity since 1976</span>
             <h1>Vava Spices</h1>
-            <div class="global-badge">Exporters & Importers of All Kinds of Spices to Any Country</div>
-            <p>Sourced directly from the lush hills of Rajakumari, we bring you the finest, hand-selected cardamom, black pepper, and cloves. Experience the royal flavors of Kerala in every pinch.</p>
-            <a href="#products" class="btn">Shop The Collection</a>
+            
+            <div class="global-badge">Exporters and Importers of all kinds of spices</div>
+            
+            <a href="#products" class="btn">Shop Now</a> 
         </div>
     </section>
 
     <!-- Products Gallery -->
     <section class="products-section" id="products">
         <h2>Our Premium Collection</h2>
-        <div class="product-grid">
+        <div class="product-grid" id="product-grid">
+            
             <div class="product-card">
                 <div class="img-wrapper">
-                    <img src="38795.jpg" alt="Premium Green Cardamom" class="product-image" onerror="this.src='38795.jpg.jpeg'">
+                    <img class="product-image auto-fix-img" data-name="38795.jpg" alt="Premium Green Cardamom">
                 </div>
                 <h3>Premium Green Cardamom</h3>
                 <p>Highly aromatic, whole green pods handpicked for unparalleled flavor.</p>
-                <a href="#contact" class="buy-now">Shop Now →</a>
+                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Premium%20Green%20Cardamom." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
             </div>
 
             <div class="product-card">
                 <div class="img-wrapper">
-                    <img src="38798.jpg" alt="Black Pepper" class="product-image" onerror="this.src='38798.jpg.jpeg'">
+                    <img class="product-image auto-fix-img" data-name="38798.jpg" alt="Black Pepper">
                 </div>
                 <h3>Rajakumari Black Pepper</h3>
                 <p>Bold, robust, and full-bodied whole peppercorns from the hills of Kerala.</p>
-                <a href="#contact" class="buy-now">Shop Now →</a>
+                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Rajakumari%20Black%20Pepper." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
             </div>
 
             <div class="product-card">
                 <div class="img-wrapper">
-                    <img src="38802.jpg" alt="Whole Cloves" class="product-image" onerror="this.src='38802.jpg.jpeg'">
+                    <img class="product-image auto-fix-img" data-name="38802.jpg" alt="Whole Cloves">
                 </div>
                 <h3>Rajakumari Whole Cloves</h3>
                 <p>Rich, warm, and intensely aromatic whole cloves that bring an elegant depth.</p>
-                <a href="#contact" class="buy-now">Shop Now →</a>
+                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Rajakumari%20Whole%20Cloves." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+            </div>
+
+            <!-- EXTRA PRODUCTS -->
+            <div class="product-card extra-product">
+                <div class="img-wrapper">
+                    <img class="product-image auto-fix-img" data-name="ginger.jpeg" alt="Dry Ginger">
+                </div>
+                <h3>Premium Dry Ginger</h3>
+                <p>Sun-dried, naturally processed ginger roots with intense flavor and a rich, earthy aroma.</p>
+                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Premium%20Dry%20Ginger." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+            </div>
+
+            <div class="product-card extra-product">
+                <div class="img-wrapper">
+                    <!-- NEW COFFEE IMAGE -->
+                    <img class="product-image auto-fix-img" data-name="coffee.png" alt="Kerala Coffee">
+                </div>
+                <h3>Kerala Robusta Coffee</h3>
+                <p>Freshly harvested, rich and bold coffee beans from the high altitudes of the Western Ghats.</p>
+                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Kerala%20Robusta%20Coffee." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+            </div>
+
+            <div class="product-card extra-product">
+                <div class="img-wrapper">
+                    <img class="product-image auto-fix-img" data-name="vanilla.jpeg" alt="Vanilla Beans">
+                </div>
+                <h3>Pure Vanilla Beans</h3>
+                <p>Rich, dark, and highly aromatic vanilla pods sourced directly from our select estates.</p>
+                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Pure%20Vanilla%20Beans." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+            </div>
+
+            <div class="product-card extra-product">
+                <div class="img-wrapper">
+                    <img class="product-image auto-fix-img" data-name="cocoa.png" alt="Raw Cocoa Beans">
+                </div>
+                <h3>Raw Cocoa Beans</h3>
+                <p>Sun-fermented premium cocoa beans, perfectly handled for rich, deep chocolate flavors.</p>
+                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Raw%20Cocoa%20Beans." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+            </div>
+
+            <div class="product-card extra-product">
+                <div class="img-wrapper">
+                    <img class="product-image auto-fix-img" data-name="mace.jpeg" alt="Mace Flower">
+                </div>
+                <h3>Royal Mace Flower</h3>
+                <p>Vibrant, crimson-red mace (Javitri) offering a delicate, warm, and highly prized spice note.</p>
+                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Royal%20Mace%20Flower." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+            </div>
+        </div>
+        
+        <!-- View More Button -->
+        <div class="view-more-container">
+            <button class="view-more-btn" id="view-more-btn">View More Spices <i class="fas fa-chevron-down"></i></button>
+        </div>
+    </section>
+
+    <!-- Global Infrastructure -->
+    <section class="infrastructure-section" id="infrastructure">
+        <h2>Farm to Global Export</h2>
+        <p style="text-align:center; max-width:700px; margin: 0 auto 3rem; color: var(--text-light);">State-of-the-art infrastructure designed to deliver the purest spices to the global market without compromising on quality.</p>
+        
+        <div class="infra-grid">
+            <div class="infra-card">
+                <img class="auto-fix-img" data-name="collecting.jpeg" alt="Spice Sourcing">
+                <h3>1. Direct Sourcing</h3>
+                <p>Harvested by hand in the high-altitude estates of Rajakumari, ensuring ethical trade and unadulterated raw quality.</p>
+            </div>
+            
+            <div class="infra-card">
+                <img class="auto-fix-img" data-name="sorting.jpeg" alt="Grading Halls">
+                <h3>2. Modern Grading Halls</h3>
+                <p>Equipped with strict quality control processing, ensuring every pod and seed meets our premium standards.</p>
+            </div>
+            
+            <div class="infra-card">
+                <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bulk Export Packaging">
+                <h3>3. Bulk Export Ready</h3>
+                <p>Professional, certified packaging capable of handling massive wholesale contracts for shipping worldwide.</p>
             </div>
         </div>
     </section>
 
-    <!-- Leadership Section -->
-    <section class="leadership-section" id="leadership">
-        <h2>Our Leadership</h2>
+    <!-- Combined About Us Section -->
+    <section class="about-section" id="about">
+        <div class="about-header">
+            <h2>Rooted in Kerala's Spice Hills</h2>
+            <p>Founded by K.P. Mathai & Sons as a humble hill produce dealer in Rajakumari, our journey began with a simple vision: to share the authentic, unadulterated flavors of the Western Ghats. Over generations, we have forged enduring relationships with local estate families, ensuring that every spice we source carries the rich, aromatic legacy of Kerala directly to your kitchen.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>1976: The Beginning</h3>
+                <p>Our story starts in the lush terrains of Kerala. By trading directly out of the hills, we built deep, ethical relationships with generational estate farmers—bonds that remain the unshakable foundation of our sourcing today.</p>
+            </div>
+            <div class="service-card">
+                <h3>2015: Vava Spices (P) Ltd</h3>
+                <p>The family legacy evolved into a modern private limited company. While maintaining our traditional roots, we introduced state-of-the-art grading halls and rigorous quality control labs to guarantee global premium standards.</p>
+            </div>
+            <div class="service-card">
+                <h3>Today: Global Exporters</h3>
+                <p>Vava Spices stands as a premier global exporter. From curated household packs to massive international bulk contracts, we ensure every single lot of spices is fully traceable and exported safely worldwide.</p>
+            </div>
+        </div>
+
+        <h3 class="leadership-title">Our Leadership</h3>
         <div class="leader-grid">
             <div class="leader-card">
-                <img src="eldho.jpeg" alt="Eldho Mathew" class="leader-img" onerror="this.src='1791526204358.jpeg'">
+                <img class="leader-img auto-fix-img" data-name="eldho" alt="Eldho Mathew">
                 <div class="leader-info">
                     <div class="leader-role">Managing Director</div>
                     <div class="leader-name">Eldho Mathew</div>
@@ -315,37 +432,12 @@
             </div>
 
             <div class="leader-card">
-                <img src="smitha.jpeg" alt="Smitha Abraham" class="leader-img" onerror="this.src='1791526290290.jpeg'">
+                <img class="leader-img auto-fix-img" data-name="smitha" alt="Smitha Abraham">
                 <div class="leader-info">
                     <div class="leader-role">Financial Manager & General Secretary</div>
                     <div class="leader-name">Smitha Abraham</div>
                     <div class="leader-exp">5 Years of Trading Experience</div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Intro Section -->
-    <section class="intro-section" id="about">
-        <h2>Rooted in Kerala's Spice Hills</h2>
-        <p>Founded in 1976 by K.P. Mathai & Sons under the name K P Mathai hill produces dealer, our family has spent generations trading the finest produce of the Western Ghats.</p>
-    </section>
-
-    <!-- Heritage Journey Grid -->
-    <section class="services-section">
-        <h2>Our Journey</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>1976: The Beginning</h3>
-                <p>K.P. Mathai & Sons begin trading out of the Kerala hills, building deep relationships with estate families that still supply us today.</p>
-            </div>
-            <div class="service-card">
-                <h3>2015: Vava Spices (P) Ltd</h3>
-                <p>The legacy is rebuilt as a private limited company. We maintain our original sourcing, with new grading halls and lab checks.</p>
-            </div>
-            <div class="service-card">
-                <h3>Today: Global Exporters</h3>
-                <p>From household packs to bulk international contracts, we ensure every lot of spices is fully traceable and exported worldwide.</p>
             </div>
         </div>
     </section>
@@ -365,9 +457,9 @@
             </div>
             
             <div class="contact-item">
-                <i class="fas fa-envelope contact-icon"></i>
-                <div class="contact-title">Email Us</div>
-                <a href="mailto:info.vavaspices@gmail.com" class="contact-link">info.vavaspices@gmail.com</a>
+                <i class="fab fa-whatsapp contact-icon"></i>
+                <div class="contact-title">WhatsApp Us</div>
+                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20have%20an%20inquiry." target="_blank" class="contact-link">+91 94954 47030</a>
             </div>
 
             <div class="contact-item">
@@ -389,11 +481,87 @@
         </div>
     </section>
 
+    <!-- Trust Badges / Certifications -->
+    <section class="certifications">
+        <div class="cert-container">
+            <div class="cert-item"><i class="fas fa-leaf"></i> 100% Pure & Natural</div>
+            <div class="cert-item"><i class="fas fa-award"></i> FSSAI Certified</div>
+            <div class="cert-item"><i class="fas fa-seedling"></i> Spices Board of India</div>
+            <div class="cert-item"><i class="fas fa-globe-americas"></i> Global Export Quality</div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
-        <img src="38005.png" alt="Logo" class="footer-logo" onerror="this.src='38005.png.jpeg'">
+        <img class="footer-logo auto-fix-img" data-name="38005.png" alt="Logo">
         <p>&copy; 2026 Vava Spices. Pure Spices | Better Living.</p>
     </footer>
 
+    <!-- INTERACTIVE SCRIPTS & BULLETPROOF IMAGE FIXER -->
+    <script>
+        // Hamburger Menu
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        const navItems = document.querySelectorAll('#nav-links a');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // View More Spices
+        const viewMoreBtn = document.getElementById('view-more-btn');
+        const extraProducts = document.querySelectorAll('.extra-product');
+        let isExpanded = false;
+
+        viewMoreBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            extraProducts.forEach(prod => {
+                if(isExpanded) {
+                    prod.classList.add('show');
+                } else {
+                    prod.classList.remove('show');
+                }
+            });
+            viewMoreBtn.innerHTML = isExpanded ? 'View Less Spices <i class="fas fa-chevron-up"></i>' : 'View More Spices <i class="fas fa-chevron-down"></i>';
+        });
+
+        // THE MASTER IMAGE FIXER 
+        document.addEventListener("DOMContentLoaded", function() {
+            const images = document.querySelectorAll('.auto-fix-img');
+            
+            images.forEach(img => {
+                const baseName = img.getAttribute('data-name');
+                const possibilities = [
+                    baseName,
+                    baseName + '.jpg',
+                    baseName + '.jpeg',
+                    baseName + '.png',
+                    baseName + '.jpg.jpg',
+                    baseName + '.jpg.jpeg',
+                    baseName + '.png.jpg',
+                    baseName + '.png.jpeg',
+                    baseName + '.jpeg.jpeg'
+                ];
+                
+                let i = 0;
+                img.onerror = function() {
+                    i++;
+                    if (i < possibilities.length) {
+                        img.src = possibilities[i];
+                    } else {
+                        img.onerror = null; 
+                    }
+                };
+                
+                img.src = possibilities[0];
+            });
+        });
+    </script>
 </body>
 </html>
