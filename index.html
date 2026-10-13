@@ -34,6 +34,63 @@
 
         h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
 
+        /* --- SMOOTH SCROLL SLIDE-DOWN ANIMATIONS --- */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HERO ENTRY ANIMATION --- */
+        @keyframes heroFadeUp {
+            0% { opacity: 0; transform: translateY(35px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-text .subtitle { animation: heroFadeUp 0.8s ease-out 0.2s forwards; opacity: 0; }
+        .hero-text h1 { animation: heroFadeUp 0.8s ease-out 0.4s forwards; opacity: 0; }
+        .hero-text .global-badge { animation: heroFadeUp 0.8s ease-out 0.6s forwards; opacity: 0; }
+        .hero-text .btn { animation: heroFadeUp 0.8s ease-out 0.8s forwards; opacity: 0; }
+
+        /* --- ANIMATED SCROLL DOWN CHEVRON --- */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            text-align: center;
+        }
+        .scroll-indicator a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.85;
+            transition: 0.3s;
+        }
+        .scroll-indicator a:hover { opacity: 1; color: var(--accent); }
+        .scroll-indicator i {
+            animation: bounceChevron 2s infinite;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+        @keyframes bounceChevron {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+
         /* --- NAVBAR --- */
         header { 
             position: absolute; 
@@ -43,7 +100,7 @@
             z-index: 50;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
         }
-        .logo-container { display: flex; align-items: center; gap: 10px; z-index: 51; }
+        .logo-container { display: flex; align-items: center; gap: 10px; z-index: 51; cursor: pointer; }
         .logo-container img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: var(--bg-ivory); }
         .logo-container span { 
             font-size: 1.5rem; 
@@ -54,7 +111,7 @@
         }
         
         nav ul { list-style: none; display: flex; gap: 2rem; }
-        nav a { text-decoration: none; color: white; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; font-weight: 500; }
+        nav a { text-decoration: none; color: white; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; font-weight: 500; cursor: pointer; }
         nav a:hover { color: var(--accent); }
         
         .menu-toggle { display: none; color: white; font-size: 1.8rem; cursor: pointer; z-index: 51; }
@@ -109,7 +166,6 @@
             font-weight: 700; 
         }
 
-        /* --- THE TRANSPARENT GOLDEN BOX --- */
         .global-badge {
             background: rgba(212, 175, 55, 0.2);
             border: 1px solid var(--accent);
@@ -152,36 +208,200 @@
         .products-section h2 { font-size: 2.8rem; margin-bottom: 3rem; color: var(--primary); font-weight: 700; }
         
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-        .product-card { text-align: left; display: flex; flex-direction: column; }
+        .product-card { text-align: left; display: flex; flex-direction: column; background: var(--bg-ivory-dark); padding: 1.5rem; border-radius: 8px; border: 1px solid #d0d6cc; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: var(--primary); }
+        .product-card::after {
+            content: 'Click for details →';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.7rem;
+            color: var(--primary);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .product-card:hover::after { opacity: 0.8; }
         
         .extra-product { display: none; }
         .extra-product.show { display: flex; }
 
-        .img-wrapper { overflow: hidden; border-radius: 8px; background: var(--bg-ivory-dark); padding: 2rem; margin-bottom: 1.2rem; text-align: center; }
-        .product-image { width: 100%; height: auto; max-width: 250px; max-height: 250px; object-fit: contain; margin: 0 auto; display: block; }
+        .img-wrapper { overflow: hidden; border-radius: 8px; background: var(--bg-ivory); padding: 1.5rem; margin-bottom: 1.2rem; text-align: center; }
+        .product-image { width: 100%; height: auto; max-width: 200px; max-height: 200px; object-fit: contain; margin: 0 auto; display: block; transition: transform 0.5s ease; }
+        .product-card:hover .product-image { transform: scale(1.05); }
         
-        .product-card h3 { font-size: 1.6rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--primary); }
+        .product-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--primary); }
         .product-card p { color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.9rem; flex-grow: 1; }
         
-        .buy-now { color: white; background-color: #25D366; padding: 0.6rem 1.2rem; border-radius: 4px; font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; align-self: flex-start; }
-        .buy-now:hover { background-color: #1ebe57; transform: translateY(-2px); }
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .buy-now { color: white; background-color: #25D366; padding: 0.5rem 1rem; border-radius: 4px; font-weight: 600; text-decoration: none; text-transform: uppercase; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 6px; transition: 0.3s; }
+        .buy-now:hover { background-color: #1ebe57; }
+        
+        .sample-btn { color: var(--primary); background-color: transparent; border: 1px solid var(--primary); padding: 0.5rem 1rem; border-radius: 4px; font-weight: 600; text-decoration: none; text-transform: uppercase; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 6px; transition: 0.3s; }
+        .sample-btn:hover { background-color: var(--primary); color: white; }
 
         .view-more-container { margin-top: 3rem; text-align: center; }
         .view-more-btn { background: transparent; border: 2px solid var(--primary); color: var(--primary); padding: 0.8rem 2.5rem; font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; border-radius: 30px; transition: 0.3s ease; }
         .view-more-btn:hover { background: var(--primary); color: var(--bg-ivory); }
 
+        /* --- PRODUCT DETAIL PAGE VIEW --- */
+        #product-detail-view {
+            display: none;
+            padding: 9rem 5% 5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            background: var(--bg-ivory-dark);
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid #d0d6cc;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+        .product-img-box {
+            background: var(--bg-ivory);
+            padding: 3rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .product-img-box img {
+            width: 100%;
+            max-width: 350px;
+            max-height: 350px;
+            object-fit: contain;
+        }
+        .product-info-box h1 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+        .product-badge-detail {
+            display: inline-block;
+            background: rgba(26, 74, 42, 0.1);
+            color: var(--primary);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .product-desc-detail {
+            color: var(--text-light);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        .specs-list {
+            margin-bottom: 2rem;
+            list-style: none;
+        }
+        .specs-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: space-between;
+        }
+        .specs-list li span:first-child { font-weight: 600; color: var(--primary); }
+
+        /* Cardamom Grades Grid */
+        .grades-container {
+            margin: 1.5rem 0 2rem;
+        }
+        .grades-container h4 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .grades-grid {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .grade-chip {
+            background: var(--bg-ivory);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.3s;
+        }
+        .grade-chip:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .back-home-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.6rem 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-bottom: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .back-home-btn:hover { background: var(--primary); color: white; }
+
+        /* --- ORIGIN STORY SECTION --- */
+        .origin-section { padding: 5rem 5%; background-color: var(--bg-ivory-dark); border-top: 1px solid #d0d6cc; text-align: center; }
+        .origin-container { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; text-align: left; }
+        .origin-text h2 { font-size: 2.8rem; color: var(--primary); margin-bottom: 1.2rem; font-weight: 700; }
+        .origin-text p { color: var(--text-light); font-size: 1rem; margin-bottom: 1.2rem; line-height: 1.8; }
+        .origin-highlights { display: flex; gap: 1.5rem; margin-top: 1.5rem; }
+        .origin-stat { background: var(--bg-ivory); padding: 1rem 1.5rem; border-radius: 8px; border-left: 3px solid var(--accent); }
+        .origin-stat h4 { font-size: 1.4rem; color: var(--primary); font-family: 'Cormorant Garamond', serif; }
+        .origin-stat span { font-size: 0.8rem; text-transform: uppercase; color: var(--text-light); letter-spacing: 1px; }
+        .origin-img img { width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); object-fit: cover; height: 400px; }
+
         /* --- GLOBAL INFRASTRUCTURE --- */
-        .infrastructure-section { padding: 5rem 5%; background-color: var(--bg-ivory-dark); text-align: center; border-top: 1px solid #eaeaea; }
+        .infrastructure-section { padding: 5rem 5%; background-color: var(--bg-ivory); text-align: center; border-top: 1px solid #d0d6cc; }
         .infrastructure-section h2 { font-size: 2.8rem; margin-bottom: 1rem; color: var(--primary); font-weight: 700; }
         .infra-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 0 auto; }
         
-        .infra-card { text-align: left; background: var(--bg-ivory); border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border: 1px solid #eaeaea; }
+        .infra-card { text-align: left; background: var(--bg-ivory-dark); border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border: 1px solid #d0d6cc; transition: transform 0.3s; }
+        .infra-card:hover { transform: translateY(-5px); }
         .infra-card img { width: 100%; height: 250px; object-fit: cover; }
         .infra-card h3 { font-size: 1.4rem; color: var(--primary); font-weight: 700; margin: 1.5rem 1.5rem 0.5rem; }
         .infra-card p { color: var(--text-light); font-size: 0.95rem; margin: 0 1.5rem 1.5rem; line-height: 1.6; }
 
+        /* --- B2B EXPORT TRADE SPECS BANNER --- */
+        .b2b-specs { background-color: #243d2b; color: white; padding: 4rem 5%; margin: 4rem 0; text-align: center; }
+        .b2b-specs h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
+        .b2b-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 2.5rem auto 0; text-align: left; }
+        .b2b-box { background: rgba(255,255,255,0.06); border-radius: 8px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.3); transition: 0.3s; }
+        .b2b-box:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .b2b-box img { width: 100%; height: 160px; object-fit: cover; }
+        .b2b-content { padding: 1.5rem; }
+        .b2b-box h4 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        .b2b-box p { font-size: 0.9rem; color: #ddd; line-height: 1.5; }
+
         /* --- ABOUT US & LEADERSHIP --- */
-        .about-section { padding: 5rem 5%; background-color: var(--bg-ivory); text-align: center; border-top: 1px solid #eaeaea;}
+        .about-section { padding: 5rem 5%; background-color: var(--bg-ivory); text-align: center; border-top: 1px solid #d0d6cc;}
         .about-header h2 { font-size: 2.8rem; margin-bottom: 1.2rem; color: var(--primary); font-weight: 700; }
         .about-header p { font-size: 1.1rem; color: var(--text-light); max-width: 850px; margin: 0 auto 4rem; line-height: 1.8; }
         
@@ -192,7 +412,8 @@
 
         .leadership-title { font-size: 2.4rem; margin-bottom: 3rem; color: var(--primary); font-weight: 700; text-align: center; }
         .leader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem; max-width: 900px; margin: 0 auto; }
-        .leader-card { background: var(--bg-ivory-dark); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.05); text-align: left; border: 1px solid #eaeaea; }
+        .leader-card { background: var(--bg-ivory-dark); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.05); text-align: left; border: 1px solid #d0d6cc; transition: transform 0.3s; }
+        .leader-card:hover { transform: translateY(-5px); }
         .leader-img { width: 100%; height: 350px; object-fit: cover; object-position: center 20%; } 
         .leader-info { padding: 2rem; }
         .leader-role { font-size: 0.85rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 0.4rem; }
@@ -200,7 +421,7 @@
         .leader-exp { color: var(--text-light); font-size: 0.95rem; font-weight: 500; }
 
         /* --- CONTACT --- */
-        .contact-section { padding: 5rem 5%; background-color: var(--bg-ivory-dark); text-align: center; border-top: 1px solid #eaeaea; }
+        .contact-section { padding: 5rem 5%; background-color: var(--bg-ivory-dark); text-align: center; border-top: 1px solid #d0d6cc; }
         .contact-section h2 { font-size: 2.8rem; margin-bottom: 1rem; color: var(--primary); font-weight: 700; }
         .contact-grid { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; max-width: 900px; margin: 2.5rem auto 0; }
         
@@ -208,11 +429,11 @@
         .contact-icon { font-size: 1.8rem; color: var(--accent); margin-bottom: 0.8rem; }
         .contact-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 1px; font-family: 'Jost', sans-serif;}
         .contact-detail { color: var(--text-light); font-size: 1rem; margin-bottom: 0.2rem; text-align: center; }
-        .contact-link { color: var(--primary); text-decoration: none; font-weight: 500; transition: color 0.3s; text-align: center; }
+        .contact-link { color: var(--primary); text-decoration: none; font-weight: 500; transition: color 0.3s; text-align: center; word-break: break-all; }
         .contact-link:hover { color: var(--accent); }
         
         .social-links { margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-        .social-btn { display: flex; align-items: center; gap: 8px; padding: 0.7rem 1.4rem; background: var(--bg-ivory); border: 1px solid #ddd; border-radius: 30px; text-decoration: none; color: var(--text-dark); font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
+        .social-btn { display: flex; align-items: center; gap: 8px; padding: 0.7rem 1.4rem; background: var(--bg-ivory); border: 1px solid #d0d6cc; border-radius: 30px; text-decoration: none; color: var(--text-dark); font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
         .social-btn:hover { background: var(--primary); color: var(--bg-ivory); border-color: var(--primary); }
 
         /* --- TRUST STRIP --- */
@@ -242,6 +463,11 @@
             .hero-text h1 { font-size: 3rem; margin-bottom: 1rem; }
             .global-badge { font-size: 0.7rem; padding: 0.4rem 1rem; line-height: 1.4; text-align: left; }
             
+            .origin-container { grid-template-columns: 1fr; }
+            .origin-img img { height: 280px; }
+            .product-detail-grid { grid-template-columns: 1fr; padding: 2rem; gap: 2rem; }
+            .product-info-box h1 { font-size: 2.3rem; }
+
             .product-grid, .leader-grid, .services-grid, .infra-grid { grid-template-columns: 1fr; gap: 2rem;}
             .leader-img { height: 320px; }
             
@@ -256,7 +482,7 @@
 <body>
 
     <header>
-        <div class="logo-container">
+        <div class="logo-container" onclick="showHome()">
             <img class="auto-fix-img" data-name="38005.png" alt="Vava Spices Logo">
             <span>Vava Spices</span>
         </div>
@@ -265,8 +491,9 @@
         </div>
         <nav>
             <ul id="nav-links">
-                <li><a href="#home">Home</a></li>
+                <li><a onclick="showHome()">Home</a></li>
                 <li><a href="#products">Products</a></li>
+                <li><a href="#origin">Origin</a></li>
                 <li><a href="#infrastructure">Infrastructure</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -274,222 +501,370 @@
         </nav>
     </header>
 
-    <section class="hero" id="home">
-        <div class="hero-animated-bg"></div>
-        <div class="hero-text">
-            <span class="subtitle">The essence of purity since 1976</span>
-            <h1>Vava Spices</h1>
+    <!-- ================= VIEW 1: HOME PAGE ================= -->
+    <div id="home-view">
+        <section class="hero" id="home">
+            <div class="hero-animated-bg"></div>
+            <div class="hero-text">
+                <span class="subtitle">The essence of purity since 1976</span>
+                <h1>Vava Spices</h1>
+                
+                <div class="global-badge">Exporters and Importers of all kinds of spices</div>
+                
+                <a href="#products" class="btn">Shop Now</a> 
+            </div>
+
+            <!-- Animated Scroll Down Indicator -->
+            <div class="scroll-indicator">
+                <a href="#products">
+                    <span>Explore</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Products Gallery -->
+        <section class="products-section scroll-reveal" id="products">
+            <h2>Our Premium Collection</h2>
+            <p style="text-align:center; max-width:600px; margin: 0 auto 3rem; color: var(--text-light);">Click on any product below to view detailed export specifications and grade options.</p>
+
+            <div class="product-grid" id="product-grid">
+                
+                <!-- 1. Cardamom -->
+                <div class="product-card scroll-reveal" onclick="showProduct('cardamom')">
+                    <div class="img-wrapper">
+                        <img class="product-image auto-fix-img" data-name="38795.jpg" alt="Premium Green Cardamom">
+                    </div>
+                    <h3>Premium Green Cardamom</h3>
+                    <p>Highly aromatic, whole green pods available in all export grades (8.5+ down to rejection/split).</p>
+                    <div class="btn-group" onclick="event.stopPropagation()">
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Premium%20Green%20Cardamom." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20request%20a%20sample%20for%20Cardamom." target="_blank" class="sample-btn"><i class="fas fa-box-open"></i> Request Sample</a>
+                    </div>
+                </div>
+
+                <!-- 2. Pepper -->
+                <div class="product-card scroll-reveal" onclick="showProduct('pepper')">
+                    <div class="img-wrapper">
+                        <img class="product-image auto-fix-img" data-name="38798.jpg" alt="Black Pepper">
+                    </div>
+                    <h3>Rajakumari Black Pepper</h3>
+                    <p>Bold, robust, and full-bodied whole peppercorns from the hills of Kerala.</p>
+                    <div class="btn-group" onclick="event.stopPropagation()">
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Rajakumari%20Black%20Pepper." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20request%20a%20sample%20for%20Black%20Pepper." target="_blank" class="sample-btn"><i class="fas fa-box-open"></i> Request Sample</a>
+                    </div>
+                </div>
+
+                <!-- 3. Cloves -->
+                <div class="product-card scroll-reveal" onclick="showProduct('cloves')">
+                    <div class="img-wrapper">
+                        <img class="product-image auto-fix-img" data-name="38802.jpg" alt="Whole Cloves">
+                    </div>
+                    <h3>Rajakumari Whole Cloves</h3>
+                    <p>Rich, warm, and intensely aromatic whole cloves that bring an elegant depth.</p>
+                    <div class="btn-group" onclick="event.stopPropagation()">
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Rajakumari%20Whole%20Cloves." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20request%20a%20sample%20for%20Cloves." target="_blank" class="sample-btn"><i class="fas fa-box-open"></i> Request Sample</a>
+                    </div>
+                </div>
+
+                <!-- EXTRA PRODUCTS -->
+                <!-- 4. Ginger -->
+                <div class="product-card extra-product scroll-reveal" onclick="showProduct('ginger')">
+                    <div class="img-wrapper">
+                        <img class="product-image auto-fix-img" data-name="ginger.jpeg" alt="Dry Ginger">
+                    </div>
+                    <h3>Premium Dry Ginger</h3>
+                    <p>Sun-dried, naturally processed ginger roots with intense flavor and a rich, earthy aroma.</p>
+                    <div class="btn-group" onclick="event.stopPropagation()">
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Premium%20Dry%20Ginger." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20request%20a%20sample%20for%20Dry%20Ginger." target="_blank" class="sample-btn"><i class="fas fa-box-open"></i> Request Sample</a>
+                    </div>
+                </div>
+
+                <!-- 5. Coffee -->
+                <div class="product-card extra-product scroll-reveal" onclick="showProduct('coffee')">
+                    <div class="img-wrapper">
+                        <img class="product-image auto-fix-img" data-name="coffee.png" alt="Kerala Coffee">
+                    </div>
+                    <h3>Kerala Robusta Coffee</h3>
+                    <p>Freshly harvested, rich and bold coffee beans from the high altitudes of the Western Ghats.</p>
+                    <div class="btn-group" onclick="event.stopPropagation()">
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Kerala%20Robusta%20Coffee." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20request%20a%20sample%20for%20Robusta%20Coffee." target="_blank" class="sample-btn"><i class="fas fa-box-open"></i> Request Sample</a>
+                    </div>
+                </div>
+
+                <!-- 6. Vanilla -->
+                <div class="product-card extra-product scroll-reveal" onclick="showProduct('vanilla')">
+                    <div class="img-wrapper">
+                        <img class="product-image auto-fix-img" data-name="vanilla.jpeg" alt="Vanilla Beans">
+                    </div>
+                    <h3>Pure Vanilla Beans</h3>
+                    <p>Rich, dark, and highly aromatic vanilla pods sourced directly from our select estates.</p>
+                    <div class="btn-group" onclick="event.stopPropagation()">
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Pure%20Vanilla%20Beans." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20request%20a%20sample%20for%20Vanilla%20Beans." target="_blank" class="sample-btn"><i class="fas fa-box-open"></i> Request Sample</a>
+                    </div>
+                </div>
+
+                <!-- 7. Cocoa -->
+                <div class="product-card extra-product scroll-reveal" onclick="showProduct('cocoa')">
+                    <div class="img-wrapper">
+                        <img class="product-image auto-fix-img" data-name="cocoa.png" alt="Raw Cocoa Beans">
+                    </div>
+                    <h3>Raw Cocoa Beans</h3>
+                    <p>Sun-fermented premium cocoa beans, perfectly handled for rich, deep chocolate flavors.</p>
+                    <div class="btn-group" onclick="event.stopPropagation()">
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Raw%20Cocoa%20Beans." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20request%20a%20sample%20for%20Raw%20Cocoa%20Beans." target="_blank" class="sample-btn"><i class="fas fa-box-open"></i> Request Sample</a>
+                    </div>
+                </div>
+
+                <!-- 8. Mace -->
+                <div class="product-card extra-product scroll-reveal" onclick="showProduct('mace')">
+                    <div class="img-wrapper">
+                        <img class="product-image auto-fix-img" data-name="mace.jpeg" alt="Mace Flower">
+                    </div>
+                    <h3>Royal Mace Flower</h3>
+                    <p>Vibrant, crimson-red mace (Javitri) offering a delicate, warm, and highly prized spice note.</p>
+                    <div class="btn-group" onclick="event.stopPropagation()">
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Royal%20Mace%20Flower." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+                        <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20request%20a%20sample%20for%20Mace%20Flower." target="_blank" class="sample-btn"><i class="fas fa-box-open"></i> Request Sample</a>
+                    </div>
+                </div>
+            </div>
             
-            <div class="global-badge">Exporters and Importers of all kinds of spices</div>
+            <!-- View More Button -->
+            <div class="view-more-container scroll-reveal">
+                <button class="view-more-btn" id="view-more-btn">View More Spices <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </section>
+
+        <!-- ORIGIN STORY SECTION WITH YOUR "NEW" IMAGE -->
+        <section class="origin-section scroll-reveal" id="origin">
+            <div class="origin-container">
+                <div class="origin-text scroll-reveal">
+                    <h2>The Rajakumari Origin & Micro-Climate</h2>
+                    <p>Nestled high in the misty hills of the Western Ghats in Idukki, Kerala, Rajakumari provides a pristine high-altitude micro-climate. The unique combination of cool mountain mist, rich organic laterite soil, and abundant tropical rainfall creates ideal conditions for spice cultivation.</p>
+                    <p>This specific terroir allows our cardamom, pepper, and cloves to develop exceptionally high essential oil content, yielding a deeper, more pungent aroma and a superior flavor profile that global buyers trust.</p>
+                    
+                    <div class="origin-highlights">
+                        <div class="origin-stat">
+                            <h4>1,000+m</h4>
+                            <span>High Altitude</span>
+                        </div>
+                        <div class="origin-stat">
+                            <h4>50%+</h4>
+                            <span>Higher Volatile Oils</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="origin-img scroll-reveal">
+                    <!-- Updated to point to "new" image from your desktop -->
+                    <img class="auto-fix-img" data-name="new" alt="Rajakumari Western Ghats Estate">
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Infrastructure -->
+        <section class="infrastructure-section scroll-reveal" id="infrastructure">
+            <h2>Farm to Global Export</h2>
+            <p style="text-align:center; max-width:700px; margin: 0 auto 3rem; color: var(--text-light);">State-of-the-art infrastructure designed to deliver the purest spices to the global market without compromising on quality.</p>
             
-            <a href="#products" class="btn">Shop Now</a> 
-        </div>
-    </section>
+            <div class="infra-grid">
+                <div class="infra-card scroll-reveal">
+                    <img class="auto-fix-img" data-name="collecting.jpeg" alt="Spice Sourcing">
+                    <h3>1. Direct Sourcing</h3>
+                    <p>Harvested by hand in the high-altitude estates of Rajakumari, ensuring ethical trade and unadulterated raw quality.</p>
+                </div>
+                
+                <div class="infra-card scroll-reveal">
+                    <img class="auto-fix-img" data-name="sorting.jpeg" alt="Grading Halls">
+                    <h3>2. Modern Grading Halls</h3>
+                    <p>Equipped with strict quality control processing, ensuring every pod and seed meets our premium standards.</p>
+                </div>
+                
+                <div class="infra-card scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bulk Export Packaging">
+                    <h3>3. Bulk Export Ready</h3>
+                    <p>Professional, certified packaging capable of handling massive wholesale contracts for shipping worldwide.</p>
+                </div>
+            </div>
+        </section>
 
-    <!-- Products Gallery -->
-    <section class="products-section" id="products">
-        <h2>Our Premium Collection</h2>
-        <div class="product-grid" id="product-grid">
+        <!-- B2B EXPORT TRADE SPECS & SECURE PAYMENT SETUP -->
+        <section class="b2b-specs scroll-reveal">
+            <h2>Global B2B & Secure Payment Setup</h2>
+            <p style="max-width: 700px; margin: 0 auto; color: #ccc;">Partner with Vava Spices with guaranteed transparency, secure payment channels, and reliable international settlements.</p>
             
-            <div class="product-card">
-                <div class="img-wrapper">
-                    <img class="product-image auto-fix-img" data-name="38795.jpg" alt="Premium Green Cardamom">
+            <div class="b2b-grid">
+                <div class="b2b-box scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Export License & Packaging">
+                    <div class="b2b-content">
+                        <h4>Global Licensing & Packaging</h4>
+                        <p>Fully licensed to export to any country. Bulk orders are custom-packed in durable jute bags or plastic bags as per client instructions.</p>
+                    </div>
                 </div>
-                <h3>Premium Green Cardamom</h3>
-                <p>Highly aromatic, whole green pods handpicked for unparalleled flavor.</p>
-                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Premium%20Green%20Cardamom." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+
+                <div class="b2b-box scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Port Delivery">
+                    <div class="b2b-content">
+                        <h4>Port & Airport Delivery</h4>
+                        <p>Delivered directly to any international port or airport following customer directions. All delivery and shipping expenses are borne by the buyer.</p>
+                    </div>
+                </div>
+
+                <div class="b2b-box scroll-reveal">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Payment Terms">
+                    <div class="b2b-content">
+                        <h4>Godown Payment Terms</h4>
+                        <p>Payment is due when the load is ready at our godown in Rajakumari, or via Letter of Credit (LC) for large bulk orders.</p>
+                    </div>
+                </div>
+
+                <!-- Sample Dispatch Card linked to "sample dispach" file -->
+                <div class="b2b-box scroll-reveal">
+                    <img class="auto-fix-img" data-name="sample dispach" alt="Sample Dispatch">
+                    <div class="b2b-content">
+                        <h4>Sample Dispatch</h4>
+                        <p>Express courier sample kits dispatched worldwide upon confirmed business inquiry.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section class="about-section scroll-reveal" id="about">
+            <div class="about-header scroll-reveal">
+                <h2>Rooted in Kerala's Spice Hills</h2>
+                <p>Founded by K.P. Mathai & Sons as a humble hill produce dealer in Rajakumari, our journey began with a simple vision: to share the authentic, unadulterated flavors of the Western Ghats. Over generations, we have forged enduring relationships with local estate families, ensuring that every spice we source carries the rich, aromatic legacy of Kerala directly to your kitchen.</p>
             </div>
 
-            <div class="product-card">
-                <div class="img-wrapper">
-                    <img class="product-image auto-fix-img" data-name="38798.jpg" alt="Black Pepper">
+            <div class="services-grid">
+                <div class="service-card scroll-reveal">
+                    <h3>1976: The Beginning</h3>
+                    <p>Our story starts in the lush terrains of Kerala. By trading directly out of the hills, we built deep, ethical relationships with generational estate farmers—bonds that remain the unshakable foundation of our sourcing today.</p>
                 </div>
-                <h3>Rajakumari Black Pepper</h3>
-                <p>Bold, robust, and full-bodied whole peppercorns from the hills of Kerala.</p>
-                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Rajakumari%20Black%20Pepper." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+                <div class="service-card scroll-reveal">
+                    <h3>2015: Vava Spices (P) Ltd</h3>
+                    <p>The family legacy evolved into a modern private limited company. While maintaining our traditional roots, we introduced state-of-the-art grading halls and rigorous quality control labs to guarantee global premium standards.</p>
+                </div>
+                <div class="service-card scroll-reveal">
+                    <h3>Today: Global Exporters</h3>
+                    <p>Vava Spices stands as a premier global exporter. From curated household packs to massive international bulk contracts, we ensure every single lot of spices is fully traceable and exported safely worldwide.</p>
+                </div>
             </div>
 
-            <div class="product-card">
-                <div class="img-wrapper">
-                    <img class="product-image auto-fix-img" data-name="38802.jpg" alt="Whole Cloves">
+            <h3 class="leadership-title scroll-reveal">Our Leadership</h3>
+            <div class="leader-grid">
+                <div class="leader-card scroll-reveal">
+                    <img class="leader-img auto-fix-img" data-name="eldho" alt="Eldho Mathew">
+                    <div class="leader-info">
+                        <div class="leader-role">Managing Director</div>
+                        <div class="leader-name">Eldho Mathew</div>
+                        <div class="leader-exp">30 Years of Trading Experience</div>
+                    </div>
                 </div>
-                <h3>Rajakumari Whole Cloves</h3>
-                <p>Rich, warm, and intensely aromatic whole cloves that bring an elegant depth.</p>
-                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Rajakumari%20Whole%20Cloves." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+
+                <div class="leader-card scroll-reveal">
+                    <img class="leader-img auto-fix-img" data-name="smitha" alt="Smitha Abraham">
+                    <div class="leader-info">
+                        <div class="leader-role">Financial Manager & General Secretary</div>
+                        <div class="leader-name">Smitha Abraham</div>
+                        <div class="leader-exp">5 Years of Trading Experience</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section scroll-reveal" id="contact">
+            <h2>Get in Touch</h2>
+            <p style="color: var(--text-light); max-width: 600px; margin: 0 auto;">Whether you are looking for household spices or global export contracts, our team in Rajakumari is ready to assist you.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <i class="fas fa-phone contact-icon"></i>
+                    <div class="contact-title">Call Us</div>
+                    <div class="contact-detail">+91 94002 25652</div>
+                    <div class="contact-detail">+91 90747 59800</div>
+                    <div class="contact-detail">+91 94954 47030</div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    <div class="contact-title">Email Us</div>
+                    <a href="mailto:info.vavaspices@gmail.com" class="contact-link">info.vavaspices@gmail.com</a>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp contact-icon"></i>
+                    <div class="contact-title">WhatsApp Us</div>
+                    <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20have%20an%20inquiry." target="_blank" class="contact-link">+91 94954 47030</a>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt contact-icon"></i>
+                    <div class="contact-title">Visit Us</div>
+                    <div class="contact-detail">Vava Spices (P) Ltd.</div>
+                    <div class="contact-detail">Rajakumari, Idukki</div>
+                    <div class="contact-detail">Kerala, India</div>
+                </div>
             </div>
 
-            <!-- EXTRA PRODUCTS -->
-            <div class="product-card extra-product">
-                <div class="img-wrapper">
-                    <img class="product-image auto-fix-img" data-name="ginger.jpeg" alt="Dry Ginger">
-                </div>
-                <h3>Premium Dry Ginger</h3>
-                <p>Sun-dried, naturally processed ginger roots with intense flavor and a rich, earthy aroma.</p>
-                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Premium%20Dry%20Ginger." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+            <div class="social-links">
+                <a href="https://www.instagram.com/vava_spices" target="_blank" class="social-btn">
+                    <i class="fab fa-instagram"></i> vava_spices
+                </a>
+                <a href="https://www.facebook.com/vavaspices" target="_blank" class="social-btn">
+                    <i class="fab fa-facebook-f"></i> Vava Spices
+                </a>
             </div>
+        </section>
 
-            <div class="product-card extra-product">
-                <div class="img-wrapper">
-                    <!-- NEW COFFEE IMAGE -->
-                    <img class="product-image auto-fix-img" data-name="coffee.png" alt="Kerala Coffee">
-                </div>
-                <h3>Kerala Robusta Coffee</h3>
-                <p>Freshly harvested, rich and bold coffee beans from the high altitudes of the Western Ghats.</p>
-                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Kerala%20Robusta%20Coffee." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
+        <!-- Trust Badges -->
+        <section class="certifications">
+            <div class="cert-container">
+                <div class="cert-item"><i class="fas fa-leaf"></i> 100% Pure & Natural</div>
+                <div class="cert-item"><i class="fas fa-award"></i> FSSAI Certified</div>
+                <div class="cert-item"><i class="fas fa-seedling"></i> Spices Board of India</div>
+                <div class="cert-item"><i class="fas fa-globe-americas"></i> Global Export Quality</div>
             </div>
+        </section>
+    </div>
 
-            <div class="product-card extra-product">
-                <div class="img-wrapper">
-                    <img class="product-image auto-fix-img" data-name="vanilla.jpeg" alt="Vanilla Beans">
-                </div>
-                <h3>Pure Vanilla Beans</h3>
-                <p>Rich, dark, and highly aromatic vanilla pods sourced directly from our select estates.</p>
-                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Pure%20Vanilla%20Beans." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
-            </div>
-
-            <div class="product-card extra-product">
-                <div class="img-wrapper">
-                    <img class="product-image auto-fix-img" data-name="cocoa.png" alt="Raw Cocoa Beans">
-                </div>
-                <h3>Raw Cocoa Beans</h3>
-                <p>Sun-fermented premium cocoa beans, perfectly handled for rich, deep chocolate flavors.</p>
-                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Raw%20Cocoa%20Beans." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
-            </div>
-
-            <div class="product-card extra-product">
-                <div class="img-wrapper">
-                    <img class="product-image auto-fix-img" data-name="mace.jpeg" alt="Mace Flower">
-                </div>
-                <h3>Royal Mace Flower</h3>
-                <p>Vibrant, crimson-red mace (Javitri) offering a delicate, warm, and highly prized spice note.</p>
-                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20Royal%20Mace%20Flower." target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order</a>
-            </div>
-        </div>
+    <!-- ================= VIEW 2: DYNAMIC PRODUCT DETAIL VIEW ================= -->
+    <div id="product-detail-view">
+        <button class="back-home-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> Back to Home</button>
         
-        <!-- View More Button -->
-        <div class="view-more-container">
-            <button class="view-more-btn" id="view-more-btn">View More Spices <i class="fas fa-chevron-down"></i></button>
-        </div>
-    </section>
+        <div class="product-detail-grid">
+            <div class="product-img-box">
+                <img id="detail-img" class="auto-fix-img" data-name="38795.jpg" alt="Product Image">
+            </div>
+            <div class="product-info-box">
+                <span class="product-badge-detail">Origin: Rajakumari, Idukki, Kerala</span>
+                <h1 id="detail-name">Product Name</h1>
+                <p id="detail-desc" class="product-desc-detail">Description...</p>
+                
+                <ul class="specs-list" id="detail-specs">
+                    <!-- Specs injected here -->
+                </ul>
 
-    <!-- Global Infrastructure -->
-    <section class="infrastructure-section" id="infrastructure">
-        <h2>Farm to Global Export</h2>
-        <p style="text-align:center; max-width:700px; margin: 0 auto 3rem; color: var(--text-light);">State-of-the-art infrastructure designed to deliver the purest spices to the global market without compromising on quality.</p>
-        
-        <div class="infra-grid">
-            <div class="infra-card">
-                <img class="auto-fix-img" data-name="collecting.jpeg" alt="Spice Sourcing">
-                <h3>1. Direct Sourcing</h3>
-                <p>Harvested by hand in the high-altitude estates of Rajakumari, ensuring ethical trade and unadulterated raw quality.</p>
-            </div>
-            
-            <div class="infra-card">
-                <img class="auto-fix-img" data-name="sorting.jpeg" alt="Grading Halls">
-                <h3>2. Modern Grading Halls</h3>
-                <p>Equipped with strict quality control processing, ensuring every pod and seed meets our premium standards.</p>
-            </div>
-            
-            <div class="infra-card">
-                <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bulk Export Packaging">
-                <h3>3. Bulk Export Ready</h3>
-                <p>Professional, certified packaging capable of handling massive wholesale contracts for shipping worldwide.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Combined About Us Section -->
-    <section class="about-section" id="about">
-        <div class="about-header">
-            <h2>Rooted in Kerala's Spice Hills</h2>
-            <p>Founded by K.P. Mathai & Sons as a humble hill produce dealer in Rajakumari, our journey began with a simple vision: to share the authentic, unadulterated flavors of the Western Ghats. Over generations, we have forged enduring relationships with local estate families, ensuring that every spice we source carries the rich, aromatic legacy of Kerala directly to your kitchen.</p>
-        </div>
-
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>1976: The Beginning</h3>
-                <p>Our story starts in the lush terrains of Kerala. By trading directly out of the hills, we built deep, ethical relationships with generational estate farmers—bonds that remain the unshakable foundation of our sourcing today.</p>
-            </div>
-            <div class="service-card">
-                <h3>2015: Vava Spices (P) Ltd</h3>
-                <p>The family legacy evolved into a modern private limited company. While maintaining our traditional roots, we introduced state-of-the-art grading halls and rigorous quality control labs to guarantee global premium standards.</p>
-            </div>
-            <div class="service-card">
-                <h3>Today: Global Exporters</h3>
-                <p>Vava Spices stands as a premier global exporter. From curated household packs to massive international bulk contracts, we ensure every single lot of spices is fully traceable and exported safely worldwide.</p>
-            </div>
-        </div>
-
-        <h3 class="leadership-title">Our Leadership</h3>
-        <div class="leader-grid">
-            <div class="leader-card">
-                <img class="leader-img auto-fix-img" data-name="eldho" alt="Eldho Mathew">
-                <div class="leader-info">
-                    <div class="leader-role">Managing Director</div>
-                    <div class="leader-name">Eldho Mathew</div>
-                    <div class="leader-exp">30 Years of Trading Experience</div>
+                <!-- Special Grades Section (Populates dynamically for Cardamom) -->
+                <div id="grades-section" class="grades-container" style="display: none;">
+                    <h4>Select Cardamom Grade to Order / Inquire:</h4>
+                    <div class="grades-grid" id="grades-grid"></div>
                 </div>
-            </div>
 
-            <div class="leader-card">
-                <img class="leader-img auto-fix-img" data-name="smitha" alt="Smitha Abraham">
-                <div class="leader-info">
-                    <div class="leader-role">Financial Manager & General Secretary</div>
-                    <div class="leader-name">Smitha Abraham</div>
-                    <div class="leader-exp">5 Years of Trading Experience</div>
+                <div class="btn-group" id="standard-actions">
+                    <a id="detail-order-btn" href="#" target="_blank" class="buy-now"><i class="fab fa-whatsapp"></i> Order Now</a>
+                    <a id="detail-sample-btn" href="#" target="_blank" class="sample-btn"><i class="fas fa-box-open"></i> Request Sample</a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact-section" id="contact">
-        <h2>Get in Touch</h2>
-        <p style="color: var(--text-light); max-width: 600px; margin: 0 auto;">Whether you are looking for household spices or global export contracts, our team in Rajakumari is ready to assist you.</p>
-        
-        <div class="contact-grid">
-            <div class="contact-item">
-                <i class="fas fa-phone contact-icon"></i>
-                <div class="contact-title">Call Us</div>
-                <div class="contact-detail">+91 94002 25652</div>
-                <div class="contact-detail">+91 90747 59800</div>
-                <div class="contact-detail">+91 94954 47030</div>
-            </div>
-            
-            <div class="contact-item">
-                <i class="fab fa-whatsapp contact-icon"></i>
-                <div class="contact-title">WhatsApp Us</div>
-                <a href="https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20have%20an%20inquiry." target="_blank" class="contact-link">+91 94954 47030</a>
-            </div>
-
-            <div class="contact-item">
-                <i class="fas fa-map-marker-alt contact-icon"></i>
-                <div class="contact-title">Visit Us</div>
-                <div class="contact-detail">Vava Spices (P) Ltd.</div>
-                <div class="contact-detail">Rajakumari, Idukki</div>
-                <div class="contact-detail">Kerala, India</div>
-            </div>
-        </div>
-
-        <div class="social-links">
-            <a href="https://www.instagram.com/vava_spices" target="_blank" class="social-btn">
-                <i class="fab fa-instagram"></i> vava_spices
-            </a>
-            <a href="https://www.facebook.com/vavaspices" target="_blank" class="social-btn">
-                <i class="fab fa-facebook-f"></i> Vava Spices
-            </a>
-        </div>
-    </section>
-
-    <!-- Trust Badges / Certifications -->
-    <section class="certifications">
-        <div class="cert-container">
-            <div class="cert-item"><i class="fas fa-leaf"></i> 100% Pure & Natural</div>
-            <div class="cert-item"><i class="fas fa-award"></i> FSSAI Certified</div>
-            <div class="cert-item"><i class="fas fa-seedling"></i> Spices Board of India</div>
-            <div class="cert-item"><i class="fas fa-globe-americas"></i> Global Export Quality</div>
-        </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -497,9 +872,189 @@
         <p>&copy; 2026 Vava Spices. Pure Spices | Better Living.</p>
     </footer>
 
-    <!-- INTERACTIVE SCRIPTS & BULLETPROOF IMAGE FIXER -->
+    <!-- INTERACTIVE SCRIPTS & DYNAMIC ROUTER -->
     <script>
-        // Hamburger Menu
+        // Database of all Products including Cardamom Grades
+        const productDatabase = {
+            'cardamom': {
+                name: 'Premium Green Cardamom',
+                image: '38795.jpg',
+                desc: 'Handpicked from the high-altitude misty hills of Rajakumari, our green cardamom pods are available in all export grades to suit your exact wholesale or retail requirements.',
+                specs: [
+                    { label: 'Origin', value: 'Rajakumari, Idukki, Kerala' },
+                    { label: 'Processing', value: 'Sun-Dried & Cleaned' },
+                    { label: 'Packaging', value: 'Jute Bags / Vacuum Pouches' }
+                ],
+                hasGrades: true,
+                grades: ['8.5+', '8+', '7.5+', '7+', '6.5+', '6 and below', 'Rejection', 'Split Types']
+            },
+            'pepper': {
+                name: 'Rajakumari Black Pepper',
+                image: '38798.jpg',
+                desc: 'Bold, heavy, and full-bodied whole peppercorns cultivated in the mineral-rich organic soils of the Western Ghats. Offers a sharp, robust heat.',
+                specs: [
+                    { label: 'Density', value: '550 g/l to 580 g/l (Garbled)' },
+                    { label: 'Purity', value: '99% Clean, Machine Cleaned' },
+                    { label: 'Moisture', value: 'Max 12%' },
+                    { label: 'Export Port', value: 'Cochin Port (FOB/CIF)' }
+                ],
+                hasGrades: false
+            },
+            'cloves': {
+                name: 'Rajakumari Whole Cloves',
+                image: '38802.jpg',
+                desc: 'Rich, reddish-brown whole cloves harvested at peak maturity. Packed with natural eugenol oil giving it a warm, pungent, and sweet aroma.',
+                specs: [
+                    { label: 'Headless Clove', value: 'Max 2%' },
+                    { label: 'Moisture', value: 'Max 12%' },
+                    { label: 'Admixture', value: 'Max 0.5%' },
+                    { label: 'Grade', value: 'Handpicked Premium' }
+                ],
+                hasGrades: false
+            },
+            'ginger': {
+                name: 'Premium Dry Ginger',
+                image: 'ginger.jpeg',
+                desc: 'Sun-dried, naturally processed ginger rhizomes with a pungent aroma and bold fibrous texture, ideal for grinding and extraction.',
+                specs: [
+                    { label: 'Processing', value: 'Sun-Dried & Polished' },
+                    { label: 'Moisture', value: 'Max 10%' },
+                    { label: 'Fiber', value: 'Low to Medium' }
+                ],
+                hasGrades: false
+            },
+            'coffee': {
+                name: 'Kerala Robusta Coffee',
+                image: 'coffee.png',
+                desc: 'High-altitude Robusta coffee beans grown under the shade of Western Ghats pepper and spice trees, delivering a rich, bold cup.',
+                specs: [
+                    { label: 'Bean Type', value: 'Robusta Cherry / Parchment' },
+                    { label: 'Screen Size', value: '17 / 18' },
+                    { label: 'Altitude', value: '1,000+ meters' }
+                ],
+                hasGrades: false
+            },
+            'vanilla': {
+                name: 'Pure Vanilla Beans',
+                image: 'vanilla.jpeg',
+                desc: 'Cured whole vanilla pods bursting with natural vanillin crystals. Sourced directly from our select high-altitude estate farmers.',
+                specs: [
+                    { label: 'Length', value: '16cm to 18cm' },
+                    { label: 'Vanillin Content', value: 'High (>2.2%)' },
+                    { label: 'Moisture', value: '28% - 32% (Gourmet Grade)' }
+                ],
+                hasGrades: false
+            },
+            'cocoa': {
+                name: 'Raw Cocoa Beans',
+                image: 'cocoa.png',
+                desc: 'Fermented and sun-dried raw cocoa beans with rich phenolic compounds, perfect for artisan chocolate makers worldwide.',
+                specs: [
+                    { label: 'Fermentation', value: '7 Days Box Fermented' },
+                    { label: 'Bean Count', value: '85-90 beans per 100g' },
+                    { label: 'Moisture', value: '7.5%' }
+                ],
+                hasGrades: false
+            },
+            'mace': {
+                name: 'Royal Mace Flower',
+                image: 'mace.jpeg',
+                desc: 'Vibrant crimson-red mace (aril) enveloping nutmeg seeds. Hand-stripped and dried with a warm, delicate, and highly prized aroma.',
+                specs: [
+                    { label: 'Color', value: 'Bright Crimson / Golden Yellow' },
+                    { label: 'Purity', value: '100% Whole Blades' },
+                    { label: 'Moisture', value: 'Max 10%' }
+                ],
+                hasGrades: false
+            }
+        };
+
+        // Reusable Image Fixer function
+        function applyImageFix(img) {
+            const baseName = img.getAttribute('data-name');
+            if (!baseName) return;
+            const possibilities = [
+                baseName,
+                baseName + '.jpg',
+                baseName + '.jpeg',
+                baseName + '.png',
+                baseName + '.jpg.jpg',
+                baseName + '.jpg.jpeg',
+                baseName + '.png.jpg',
+                baseName + '.png.jpeg',
+                baseName + '.jpeg.jpeg'
+            ];
+            let i = 0;
+            img.onerror = function() {
+                i++;
+                if (i < possibilities.length) {
+                    img.src = possibilities[i];
+                } else {
+                    img.onerror = null; 
+                }
+            };
+            img.src = possibilities[0];
+        }
+
+        // Navigation Switcher Functions
+        function showHome() {
+            document.getElementById('home-view').style.display = 'block';
+            document.getElementById('product-detail-view').style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        function showProduct(productId) {
+            const prod = productDatabase[productId];
+            if (!prod) return;
+
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('product-detail-view').style.display = 'block';
+
+            document.getElementById('detail-name').innerText = prod.name;
+            document.getElementById('detail-desc').innerText = prod.desc;
+            
+            const imgEl = document.getElementById('detail-img');
+            imgEl.setAttribute('data-name', prod.image);
+            applyImageFix(imgEl);
+
+            // Populate Specs
+            const specsList = document.getElementById('detail-specs');
+            specsList.innerHTML = '';
+            prod.specs.forEach(s => {
+                specsList.innerHTML += `<li><span>${s.label}</span> <span>${s.value}</span></li>`;
+            });
+
+            // Handle Cardamom Grades Section
+            const gradesSection = document.getElementById('grades-section');
+            const standardActions = document.getElementById('standard-actions');
+            
+            if (prod.hasGrades) {
+                gradesSection.style.display = 'block';
+                standardActions.style.display = 'none';
+                
+                const gradesGrid = document.getElementById('grades-grid');
+                gradesGrid.innerHTML = '';
+                prod.grades.forEach(grade => {
+                    const whatsappMsg = `Hi Vava Spices, I would like to inquire / order Cardamom Grade: ${grade}.`;
+                    gradesGrid.innerHTML += `
+                        <a href="https://wa.me/919495447030?text=${encodeURIComponent(whatsappMsg)}" target="_blank" class="grade-chip">
+                            <i class="fab fa-whatsapp"></i> Grade ${grade}
+                        </a>
+                    `;
+                });
+            } else {
+                gradesSection.style.display = 'none';
+                standardActions.style.display = 'flex';
+                
+                // Populate Standard WhatsApp Links
+                document.getElementById('detail-order-btn').href = `https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20order%20${encodeURIComponent(prod.name)}.`;
+                document.getElementById('detail-sample-btn').href = `https://wa.me/919495447030?text=Hi%20Vava%20Spices,%20I%20would%20like%20to%20request%20a%20sample%20for%20${encodeURIComponent(prod.name)}.`;
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        // 1. Hamburger Menu
         const mobileMenu = document.getElementById('mobile-menu');
         const navLinks = document.getElementById('nav-links');
         const navItems = document.querySelectorAll('#nav-links a');
@@ -514,7 +1069,7 @@
             });
         });
 
-        // View More Spices
+        // 2. View More Spices
         const viewMoreBtn = document.getElementById('view-more-btn');
         const extraProducts = document.querySelectorAll('.extra-product');
         let isExpanded = false;
@@ -524,6 +1079,7 @@
             extraProducts.forEach(prod => {
                 if(isExpanded) {
                     prod.classList.add('show');
+                    prod.classList.add('active');
                 } else {
                     prod.classList.remove('show');
                 }
@@ -531,35 +1087,34 @@
             viewMoreBtn.innerHTML = isExpanded ? 'View Less Spices <i class="fas fa-chevron-up"></i>' : 'View More Spices <i class="fas fa-chevron-down"></i>';
         });
 
-        // THE MASTER IMAGE FIXER 
+        // 3. Scroll Reveal Observer Animation
         document.addEventListener("DOMContentLoaded", function() {
-            const images = document.querySelectorAll('.auto-fix-img');
-            
-            images.forEach(img => {
-                const baseName = img.getAttribute('data-name');
-                const possibilities = [
-                    baseName,
-                    baseName + '.jpg',
-                    baseName + '.jpeg',
-                    baseName + '.png',
-                    baseName + '.jpg.jpg',
-                    baseName + '.jpg.jpeg',
-                    baseName + '.png.jpg',
-                    baseName + '.png.jpeg',
-                    baseName + '.jpeg.jpeg'
-                ];
-                
-                let i = 0;
-                img.onerror = function() {
-                    i++;
-                    if (i < possibilities.length) {
-                        img.src = possibilities[i];
-                    } else {
-                        img.onerror = null; 
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
                     }
-                };
-                
-                img.src = possibilities[0];
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // 4. Run Master Image Fixer on Page Load
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.auto-fix-img').forEach(img => {
+                if (img.id !== 'detail-img') {
+                    applyImageFix(img);
+                }
             });
         });
     </script>
